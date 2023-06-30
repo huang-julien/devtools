@@ -11,11 +11,15 @@ const props = withDefaults(
     collapse?: boolean
     open?: boolean
     padding?: boolean | string
+    textAttrs?: Record<string, string> | null
+    descriptionAttrs?: Record<string, string> | null
   }>(), {
     containerClass: '',
     open: true,
     padding: true,
     collapse: true,
+    textAttrs: null,
+    descriptionAttrs: null,
   },
 )
 
@@ -30,12 +34,12 @@ function onToggle(e: any) {
     <summary class="cursor-pointer select-none hover:bg-active p4" :class="collapse ? '' : 'pointer-events-none'">
       <NIconTitle :icon="icon" :text="text" text-xl transition :class="[open ? 'op100' : 'op60', headerClass]">
         <div>
-          <div text-base>
+          <div text-base v-bind="textAttrs">
             <slot name="text">
               {{ text }}
             </slot>
           </div>
-          <div v-if="description || $slots.description" text-sm op50>
+          <div v-if="description || $slots.description" text-sm op50 v-bind="descriptionAttrs">
             <slot name="description">
               {{ description }}
             </slot>
